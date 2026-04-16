@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>North India Pilgrimage — Optimized Plan (May 3–8, 2026)</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;background:#f8f9fa;color:var(--color-text-primary);line-height:1.6}
+.wrap{padding:2rem 1.5rem;max-width:900px;margin:0 auto;background:white}
+.trip-header{margin-bottom:2.5rem;padding-bottom:2rem;border-bottom:2px solid #f0f0f0}
+.trip-title{font-size:2.5rem;font-weight:700;color:#1a1a1a;margin-bottom:1rem;letter-spacing:-0.5px}
+.trip-subtitle{font-size:15px;color:#666;margin-bottom:1.25rem;font-weight:500}
+.trip-meta{display:flex;flex-wrap:wrap;gap:12px;margin-top:1.25rem}
+.badge{font-size:13px;padding:6px 14px;border-radius:24px;border:1px solid var(--color-border-secondary);color:var(--color-text-secondary);background:var(--color-background-secondary);font-weight:500;transition:all .2s}
+.badge:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.1)}
+.badge.hot{background:linear-gradient(135deg,#FAEEDA,#ffd89a);color:#854F0B;border-color:#EF9F27}
+.badge.people{background:linear-gradient(135deg,#E6F1FB,#d4e7ff);color:#185FA5;border-color:#378ADD}
+.badge.warn{background:linear-gradient(135deg,#FCEBEB,#ffc5c5);color:#A32D2D;border-color:#E24B4A}
+.badge.success{background:linear-gradient(135deg,#dbeafe,#c7d2fe);color:#1e3a8a;border-color:#60a5fa}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:2rem;border-bottom:2px solid #f0f0f0;padding-bottom:1rem;overflow-x:auto}
+.tab{font-size:14px;padding:10px 18px;border-radius:8px;border:none;background:transparent;color:var(--color-text-secondary);cursor:pointer;transition:all .25s;font-weight:500;white-space:nowrap;position:relative}
+.tab:hover{color:#0066cc;background:rgba(0,102,204,0.05)}
+.tab.active{color:#0066cc;background:rgba(0,102,204,0.08)}
+.tab.active::after{content:'';position:absolute;bottom:-1rem;left:0;right:0;height:3px;background:#0066cc;border-radius:3px 3px 0 0}
+.day-panel{display:none;animation:fadeIn 0.3s ease-in}
+.day-panel.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.day-title{font-size:1.75rem;font-weight:700;color:#1a1a1a;margin-bottom:0.75rem;letter-spacing:-0.5px}
+.day-sub{font-size:15px;color:#666;margin-bottom:1.5rem;font-weight:500}
+.day-theme{display:inline-block;font-size:12px;background:#e0e7ff;color:#1e40af;padding:4px 12px;border-radius:20px;margin-bottom:1rem;font-weight:600}
+.weather-bar{display:flex;align-items:center;gap:15px;padding:14px 16px;background:linear-gradient(135deg,#fff5e6,#fffbf0);border:1.5px solid #ffc107;border-radius:10px;margin-bottom:2rem;font-size:13px;color:#8b6914;font-weight:500}
+.weather-bar::before{content:'☀️';font-size:20px}
+.timeline{display:flex;flex-direction:column;gap:0;margin-bottom:2rem}
+.trow{display:flex;gap:0;align-items:stretch;padding:16px 0;border-bottom:1px solid #f0f0f0}
+.trow:last-child{border-bottom:none}
+.ttime{width:90px;min-width:90px;font-size:13px;color:#0066cc;padding:0 16px 0 0;text-align:right;line-height:1.4;font-weight:600}
+.tline{display:flex;flex-direction:column;align-items:center;width:24px;min-width:24px}
+.tdot{width:14px;height:14px;border-radius:50%;background:var(--color-background-info);border:3px solid var(--color-border-info);margin-top:4px;flex-shrink:0;box-shadow:0 2px 8px rgba(0,102,204,0.2)}
+.tdot.rest{background:#10b981;border-color:#059669;box-shadow:0 2px 8px rgba(16,185,129,0.2)}
+.tdot.travel{background:#8b5cf6;border-color:#7c3aed;box-shadow:0 2px 8px rgba(139,92,246,0.2)}
+.tdot.must{background:#f59e0b;border-color:#d97706;box-shadow:0 2px 8px rgba(245,158,11,0.2)}
+.tvert{flex:1;width:2px;background:#e5e7eb;margin:0 auto;margin-top:6px}
+.tcontent{flex:1;padding:0 16px 0 24px}
+.tevent{font-size:15px;font-weight:700;color:#1a1a1a;margin-bottom:4px}
+.tdesc{font-size:13px;color:#666;margin-top:6px;line-height:1.6}
+.ttip{font-size:12px;margin-top:8px;padding:8px 12px;border-radius:6px;background:rgba(0,102,204,0.1);color:#0066cc;border:1px solid rgba(0,102,204,0.2);font-weight:500}
+.ttip.warn{background:rgba(245,158,11,0.1);color:#b45309;border-color:rgba(245,158,11,0.2)}
+.ttip.success{background:rgba(16,185,129,0.1);color:#047857;border-color:rgba(16,185,129,0.2)}
+.must-tag{display:inline-block;font-size:11px;padding:4px 10px;border-radius:12px;background:#fef3c7;color:#92400e;border:1px solid #fcd34d;margin-left:8px;vertical-align:middle;font-weight:600}
+.optional-tag{display:inline-block;font-size:11px;padding:4px 10px;border-radius:12px;background:#dbeafe;color:#1e40af;border:1px solid #93c5fd;margin-left:8px;vertical-align:middle;font-weight:600}
+.section-divider{margin:2rem 0;border:none;border-top:2px solid #f0f0f0}
+.hotel-card{background:linear-gradient(135deg,#f9fafb,#ffffff);border:1.5px solid #e5e7eb;border-radius:12px;padding:18px;margin-top:1rem;transition:all .3s;box-shadow:0 2px 8px rgba(0,0,0,0.04)}
+.hotel-card:hover{border-color:#d1d5db;box-shadow:0 8px 20px rgba(0,0,0,0.08);transform:translateY(-2px)}
+.hotel-night{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#9ca3af;font-weight:700;margin-bottom:8px}
+.hotel-name{font-size:15px;font-weight:700;color:#1a1a1a;margin-bottom:4px}
+.hotel-meta{font-size:13px;color:#666;margin-top:4px}
+.hotel-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.htag{font-size:12px;padding:4px 10px;border-radius:8px;background:linear-gradient(135deg,#dbeafe,#e0e7ff);color:#1e40af;border:1px solid #93c5fd;font-weight:500}
+.transport-row{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid #f0f0f0}
+.transport-row:last-child{border-bottom:none}
+.t-icon{width:40px;height:40px;border-radius:8px;background:linear-gradient(135deg,#dbeafe,#bfdbfe);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;color:#1e40af}
+.t-info{flex:1}
+.t-title{font-size:14px;font-weight:700;color:#1a1a1a}
+.t-sub{font-size:13px;color:#666;margin-top:4px;line-height:1.5}
+.budget-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #f0f0f0;font-size:13px;color:#666}
+.budget-row:last-child{border-bottom:none;font-weight:700;font-size:15px;color:#1a1a1a;padding-top:14px}
+.budget-row .amt{color:#0066cc;font-weight:700}
+.budget-note{margin-top:1.5rem;padding:14px;border-radius:8px;background:linear-gradient(135deg,#eff6ff,#f0f9ff);color:#1e3a8a;font-size:12px;border:1px solid #bfdbfe;line-height:1.6;font-weight:500}
+.budget-highlight{background:linear-gradient(135deg,#f0fdf4,#f7fee7);border:1px solid #bbf7d0;color:#166534;padding:12px;border-radius:8px;margin-top:1rem;font-weight:500}
+.tips-list{display:flex;flex-direction:column;gap:12px;margin-top:1rem}
+.tip-item{display:flex;gap:12px;align-items:flex-start;padding:14px;border-radius:10px;background:linear-gradient(135deg,#f0fdf4,#f7fee7);font-size:13px;color:#1f2937;line-height:1.6;border:1px solid #bbf7d0;transition:all .2s}
+.tip-item:hover{border-color:#86efac;background:linear-gradient(135deg,#f7fee7,#fefce8)}
+.tip-icon{font-size:18px;flex-shrink:0;margin-top:0px}
+.improvement-badge{display:inline-block;background:#dcfce7;color:#166534;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;margin-left:8px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<h1 class="sr-only">6-day Optimized North India Family Pilgrimage, May 3–8 2026</h1>
+
+<div class="trip-header">
+  <div class="trip-title">🇮🇳 North India Pilgrimage — OPTIMIZED</div>
+  <div class="trip-subtitle">May 3–8, 2026 — Comfortable, Elderly-Friendly, Heat-Managed <span class="improvement-badge">✅ Improved Plan</span></div>
+  <div class="trip-meta">
+    <span class="badge people">👥 5 people · Family from Tamil Nadu</span>
+    <span class="badge people">✈️ Delhi arrival → Gorakhpur departure</span>
+    <span class="badge hot">🌡️ May heat: 40–44°C (managed)</span>
+    <span class="badge warn">⚠️ First-time visitors</span>
+    <span class="badge success">💪 Low-stress + buffer day</span>
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="show('day1',this)">May 3 — Delhi</div>
+  <div class="tab" onclick="show('day2',this)">May 4 — Vrindavan+Agra</div>
+  <div class="tab" onclick="show('day3',this)">May 5 — Taj+Prayagraj</div>
+  <div class="tab" onclick="show('day4',this)">May 6 — Varanasi</div>
+  <div class="tab" onclick="show('day5',this)">May 7 — Ayodhya (NEW!)</div>
+  <div class="tab" onclick="show('day6',this)">May 8 — Departure</div>
+  <div class="tab" onclick="show('hotels',this)">Hotels</div>
+  <div class="tab" onclick="show('transport',this)">Transport</div>
+  <div class="tab" onclick="show('budget',this)">Budget</div>
+  <div class="tab" onclick="show('tips',this)">Summer Tips</div>
+</div>
+
+<!-- DAY 1 -->
+<div id="day1" class="day-panel active">
+  <div class="day-title">Day 1 — Sunday, May 3 — Delhi Arrival</div>
+  <span class="day-theme">🌤️ Light start • Zero stress • Heat control</span>
+  <div class="day-sub">Delhi airport → settle in → two iconic landmarks</div>
+  <div class="weather-bar">Delhi: 36–43°C • Dry heat • Avoid 11 AM–5 PM outdoors</div>
+
+  <div class="timeline">
+    <div class="trow"><div class="ttime">12:30 PM</div><div class="tline"><div class="tdot travel"></div><div class="tvert"></div></div><div class="tcontent">
+      <div class="tevent">Land at IGI Airport (T2 / T3)</div>
+      <div class="tdesc">Collect baggage. Pre-booked AC taxi waiting at exit. Driver holds name board. Journey to hotel ~45–60 min.</div>
+    </div></div>
+
+    <div class="trow"><div class="ttime">1:30 PM</div><div class="tline"><div class="tdot rest"></div><div class="tvert"></div></div><div class="tcontent">
+      <div class="tevent">Hotel Check-in — Karol Bagh / Connaught Place</div>
+      <div class="tdesc">Priority: Lift + excellent AC + early check-in confirmed. Freshen up. Lunch + complete rest.</div>
+      <div class="ttip warn">⚠️ STRICT RULE: No outdoor movement 2–5 PM. This is peak Delhi heat (43°C).</div>
+    </div></div>
+
+    <div class="trow"><div class="ttime">5:00 PM</div><div class="tline"><div class="tdot must"></div><div class="tvert"></div></div><div class="tcontent">
+      <div class="tevent">Lotus Temple (Bahá'í House of Worship) <span class="must-tag">must-visit</span></div>
+      <div class="tdesc">Open till ~6 PM on Sundays. Free entry. Shoes off at entrance (stand provided). Wheelchair-friendly. Marble pathways. Serene silence. ~45 min total.</div>
+      <div class="ttip success">✅ Sunday open—perfect! Minimal crowds, spiritual atmosphere.</div>
+      <div class="ttip">👉 Leave hotel by 4:15 PM (traffic buffer)</div>
+    </div></div>
+
+    <div class="trow"><div class="ttime">7:00 PM</div><div class="tline"><div class="tdot must"></div><div class="tvert"></div></div><div class="tcontent">
+      <div class="tevent">India Gate <span class="must-tag">must-visit</span></div>
+      <div class="tdesc">Evening best time—monument lit beautifully. Cooler (~32°C). Open lawns with benches. E-scooters + golf carts nearby. Great for family photos.</div>
+      <div class="ttip">🚕 Direct taxi from Lotus Temple (~15 min)</div>
+    </div></div>
+
+    <div class="trow"><div class="ttime">8:30 PM</div><div class="tline"><div class="tdot rest"></div><div class="tvert"></div></div><div class="tcontent">
+      <div class="tevent">Dinner + Return to Hotel</div>
+      <div class="tdesc">Safe options: Saravana Bhavan (South Indian) or Haldiram's. Avoid heavy meals on Day 1.</div>
+    </div></div>
+
+    <div class="trow"><div class="ttime">🛌 10 PM</div><div class="tline"><div class="tdot rest"></div><div class="tvert"></div></div><div class="tcontent">
+      <div class="tevent">Sleep</div>
+      <div class="tdesc">Early night mandatory. Tomorrow starts at 5 AM.</div>
+    </div></div>
+  </div>
+</div>
+
+<!-- DAY 2 -->
+<div id="day2" class="day-panel">
+  <div class="day-title">Day 2 — Monday, May 4 — Vrindavan + Agra</div>
+  <span class="day-theme">🙏 Spiritual exposure + crowd management</span>
+  <div class="day-sub">Early Delhi departure → Vrindavan temples → Agra city</div>
+  <div class="weather-bar">Mathura/Agra: 38–44°C • Leave before 6 AM • Peak crowd: 10 AM–12 PM</div>
+
+  <div class="timeline">
+    <div class="trow"><div class="ttime">5:00 AM</div><div class="tline"><div class="tdot travel"></div><div class="tvert"></div></div><div class="tcontent">
+      <div class="tevent">Depart Delhi (AC Cab)</div>
+      <div class="tdesc">~180 km via Yamuna Expressway. ~2.5–3 hrs. Pack light breakfast or eat at dhaba en route.</div>
+    </div></div>
+
+    <div class="trow"><div class="ttime">8:30 AM</div><div class="tline"><div class="tdot must"></div><div class="tvert"></div></div><div class="tcontent">
+      <div class="tevent">Prem Mandir, Vrindavan <span class="must-tag">must-visit</span></div>
+      <div class="tdesc">Arrive at opening. White marble palace-temple. E-buggy available for elderly. Audio tour included. Cooler + less crowded in morning. Morning session closes 12 PM.</div>
+      <div class="ttip success">✅ Arrive 8:30 AM sharp—white marble glows beautifully in morning light. Zero afternoon hassle.</div>
+    </div></div>
+
+    <div class="trow"><div class="ttime">10:00 AM</div><div class="tline"><div class="tdot"></div><div class="tvert"></div></div><div class="tcontent">
+      <div class="tevent">ISKCON Vrindavan <span class="optional-tag">optional</span></div>
+      <div class="tdesc">Spacious, modern, well-organized. Lift access. Peaceful darshan. 20–30 min visit.</div>
+      <div class="ttip">E-rickshaw connects temples (~₹80)</div>
+    </div></div>
+
+    <div class="trow"><div class="ttime">10:30 AM</div><div class="tline"><div class="tdot"></div><div class="tvert"></div></div><div class="tcontent">
+      <div class="tevent">⚠️ Banke Bihari Mandir <span class="optional-tag">use judgment</span></div>
+      <div class="tdesc">Very crowded + chaotic. Ancient Krishna temple. If visiting: MAX 15–20 min, hold hands tightly.</div>
+      <div class="ttip warn">👉 SKIP if heat/crowd feels intense. No shame—this is about family comfort, not checklist.</div>
+    </div></div>
+
+    <div class="trow"><div class="ttime">12:00 PM</div><div class="tline"><div class="tdot rest"></div><div class="tvert"></div></div><div class="tcontent">
+      <div class="tevent">Lunch in Vrindavan + Depart for Agra</div>
+      <div class="tdesc">~60 km (1.5 hrs). Arrive Agra ~2 PM. Hotel MUST be within 2–3 km of Taj Mahal.</div>
+    </div></div>
+
+    <div class="trow"><div class="ttime">2:00 PM</div><div class="tline"><div class="tdot rest"></div><div class="tvert"></div></div><div class="tcontent">
+      <div class="tevent">Hotel Check-in + Full Rest</div>
+      <div class="tdesc">Mandatory 2–5 PM rest. No exceptions. Heat exhaustion risk real at 42°C.</div>
+      <div class="ttip warn">Don't skip—this protects grandma and entire group.</div>
+    </div></div>
+
+    <div class="trow"><div class="ttime">5:30 PM</div><div class="tline"><div class="tdot"></div><div class="tvert"></div></div><div class="tcontent">
+      <div class="tevent">Mehtab Bagh — Sunset Taj View</div>
+      <div class="tdesc">Garden across Yamuna. Free entry. Minimal crowds. Gorgeous Taj view without entry hassle. Perfect family photos. Short walk + benches available.</div>
+    </div></div>
+
+    <div class="trow"><div class="ttime">8:00 PM</div><div class="tline"><div class="tdot rest"></div><div class="tvert"></div></div><div class="tcontent">
+      <div class="tevent">Dinner + Sleep</div>
+      <div class="tdesc">Try: Dasaprakash (South Indian) or Pinch of Spice. Sleep by 10 PM—Taj visit starts 5:30 AM tomorrow.</div>
+    </div></div>
+  </div>
+</div>
+
+<!-- DAY 3 -->
+<div id="day3" class="day-panel">
+  <div class="day-title">Day 3 — Tuesday, May 5 — Taj Mahal + Prayagraj</div>
+  <span class="day-theme">✨ Iconic monument + efficient travel</span>
+  <div class="day-sub">Sunrise Taj visit → Agra → train to Prayagraj</div>
+  <div class="weather-bar">Agra: 38–43°C • Taj opens 6 AM • Must leave by 9 AM before heat</div>
+
+  <div class="timeline">
+    <div class="trow"><div class="ttime">5:30 AM</div><div class="tline"><div class="tdot travel"></div><div class="tvert"></div></div><div class="tcontent">
+      <div class="tevent">Taxi to Taj Mahal (West Gate)</div>
+      <div class="tdesc">West Gate closest + less crowded. Battery golf cart available (₹25/adult). Grandma MUST use—saves 600m walking in heat.</div>
+    </div></div>
+
+    <div class="trow"><div class="ttime">6:00 AM</div><div class="tline"><div class="tdot must"></div><div class="tvert"></div></div><div class="tcontent">
+      <div class="tevent">Taj Mahal — Sunrise Visit <span class="must-tag">must-visit</span></div>
+      <div class="tdesc">Opens 6 AM. Monument glows golden-pink. Temperature ~26°C (perfect). Thin crowds. Indian citizen: ₹50/person (bring Aadhaar). Photography inside mausoleum NOT allowed. Plan ~1.5 hrs.</div>
+      <div class="ttip success">✅ Sunrise is THE best time. Marble transforms in morning gold vs harsh afternoon sun.</div>
+    </div></div>
+
+    <div class="trow"><div class="ttime">8:00 AM</div><div class="tline"><div class="tdot rest"></div><div class="tvert"></div></div><div class="tcontent">
+      <div class="tevent">Return Hotel → Breakfast → Checkout</div>
+      <div class="tdesc">Freshen up. Full breakfast. Check-out by 9:30 AM. Taxi to Agra Cantt Station (~15 min).</div>
+    </div></div>
+
+    <div class="trow"><div class="ttime">10:00 AM</div><div class="tline"><div class="tdot travel"></div><div class="tvert"></div></div><div class="tcontent">
+      <div class="tevent">Train: Agra Cantt → Prayagraj Junction</div>
+      <div class="tdesc">Recommend: Prayagraj Express (12418) or Taj Express. ~4.5 hrs. AC 3-Tier (3A) preferred—grandma can lie down. Book on IRCTC. Senior citizen quota: 40% discount for 60+. Carry snacks + water.</div>
+      <div class="ttip">AC 3-Tier = rest during journey</div>
+    </div></div>
+
+    <div class="trow"><div class="ttime">2:30 PM</div><div class="tline"><div class="tdot rest"></div><div class="tvert"></div></div><div class="tcontent">
+      <div class="tevent">Arrive Prayagraj → Hotel Check-in</div>
+      <div class="tdesc">Hotel near Sangam area. Lunch + mandatory rest (2–5 PM).</div>
+    </div></div>
+
+    <div class="trow"><div class="ttime">5:00 PM</div><div class="tline"><div class="tdot must"></div><div class="tvert"></div></div><div class="tcontent">
+      <div class="tevent">Triveni Sangam — Boat Ride <span class="must-tag">must-visit</span></div>
+      <div class="tdesc">Hire private boat (₹300–500 group). Boat goes to Ganga + Yamuna confluence. Grandma sits in boat—NO need to step in water. Take holy dip or touch water via boat's ladder. Aarti at ghat ~6:30 PM.</div>
+      <div class="ttip success">✅ Private boat = everyone comfortable, no crowds, full experience.</div>
+    </div></div>
+
+    <div class="trow"><div class="ttime">7:30 PM</div><div class="tline"><div class="tdot rest"></div><div class="tvert"></div></div><div class="tcontent">
+      <div class="tevent">Dinner + Early Sleep</div>
+      <div class="tdesc">Try: El Chico or Ely's Restaurant. Early 10 PM sleep.</div>
+    </div></div>
+  </div>
+</div>
+
+<!-- DAY 4 -->
+<div id="day4" class="day-panel">
+  <div class="day-title">Day 4 — Wednesday, May 6 — Varanasi</div>
+  <span class="day-theme">🏞️ Spiritual depth + minimal movement</span>
+  <div class="day-sub">Train to Varanasi → Kashi Vishwanath → Ganga Aarti</div>
+  <div class="weather-bar">Varanasi: 38–42°C • Aarti: 7:00–7:45 PM daily • Kashi Vishwanath: Book VIP pass (free)</div>
+
+  <div class="timeline">
+    <div class="trow"><div class="ttime">6:30 AM</div><div class="tline"><div class="tdot travel"></div><div class="tvert"></div></div><div class="tcontent">
+      <div class="tevent">Train: Prayagraj → Varanasi Junction</div>
+      <div class="tdesc">Mahanagari Express or Kashi Express. ~2 hrs. AC Chair Car. Arrive ~8:30 AM. Pre-booked taxi to hotel (~20 min).</div>
+    </div></div>
+
+    <div class="trow"><div class="ttime">9:00 AM</div><div class="tline"><div class="tdot rest"></div><div class="tvert"></div></div><div class="tcontent">
+      <div class="tevent">Hotel Check-in (Assi Ghat Area)</div>
+      <div class="tdesc">Lift MANDATORY. Avoid deep lanes. Breakfast + freshen up.</div>
+    </div></div>
+
+    <div class="trow"><div class="ttime">10:00 AM</div><div class="tline"><div class="tdot must"></div><div class="tvert"></div></div><div class="tcontent">
+      <div class="tevent">Shri Kashi Vishwanath Temple</div>
+      <div class="tdesc">New Corridor beautifully designed. Wide pathways + ramps for elderly. Carry Aadhaar (mandatory). VIP darshan booked online = SKIP QUEUE. ~1.5 hrs. Dress: no shorts/sleeveless.</div>
+      <div class="ttip success">✅ New corridor has wheelchair ramps, restrooms, seating—very elderly-friendly.</div>
+    </div></div>
+
+    <div class="trow"><div class="ttime">11:30 AM</div><div class="tline"><div class="tdot"></div><div class="tvert"></div></div><div class="tcontent">
+      <div class="tevent">Annapurna Devi Temple + Ghat Glimpse</div>
+      <div class="tdesc">2 min walk from Vishwanath. Quick auto to Dashashwamedh Ghat to see morning light (calmer than evening). Optional: Souvenir shopping nearby.</div>
+    </div></div>
+
+    <div class="trow"><div class="ttime">12:30 PM</div><div class="tline"><div class="tdot rest"></div><div class="tvert"></div></div><div class="tcontent">
+      <div class="tevent">Lunch + STRICT Rest at Hotel</div>
+      <div class="tdesc">No movement 1–5 PM. Varanasi ~41°C. Rest non-negotiable. Light lunch—Baati Chokha or South Indian.</div>
+      <div class="ttip warn">Varanasi lanes narrow + congested. Heat exhaustion risk real. Mid-day rest protects everyone.</div>
+    </div></div>
+
+    <div class="trow"><div class="ttime">5:00 PM</div><div class="tline"><div class="tdot"></div><div class="tvert"></div></div><div class="tcontent">
+      <div class="tevent">Boat Ride on Ganga — Ghat Tour</div>
+      <div class="tdesc">Private wooden boat from Assi Ghat (~₹500–700 for 1 hr). Explore Manikarnika, Harishchandra, Dashashwamedh ghats. Grandma + parents sit comfortably. Golden-hour light best.</div>
+      <div class="ttip success">✅ Zero walking, full ghat experience, seated entire time.</div>
+    </div></div>
+
+    <div class="trow"><div class="ttime">7:00 PM</div><div class="tline"><div class="tdot must"></div><div class="tvert"></div></div><div class="tcontent">
+      <div class="tevent">Ganga Aarti — Assi Ghat <span class="must-tag">must-visit</span></div>
+      <div class="tdesc">Assi Ghat aarti smaller, more intimate than Dashashwamedh—perfect for grandma. Priests perform 7-lamp ritual. Arrive 15 min early for front seats. Bring small mat or ask hotel for cushion. ~45 min ceremony.</div>
+      <div class="ttip success">✅ Less chaotic than Dashashwamedh. Actual spiritual atmosphere close-up.</div>
+    </div></div>
+
+    <div class="trow"><div class="ttime">8:00 PM</div><div class="tline"><div class="tdot rest"></div><div class="tvert"></div></div><div class="tcontent">
+      <div class="tevent">Dinner near Assi Ghat + Sleep</div>
+      <div class="tdesc">Rooftop restaurants with Ganga views: The Brown Bread Bakery or Mango Lanka (family-friendly). Sleep early—5 AM start next day.</div>
+    </div></div>
+  </div>
+</div>
+
+<!-- DAY 5 -->
+<div id="day5" class="day-panel">
+  <div class="day-title">Day 5 — Thursday, May 7 — Varanasi → Ayodhya (STAY OVERNIGHT) <span class="improvement-badge">🎯 KEY IMPROVEMENT</span></div>
+  <span class="day-theme">💪 Reduce fatigue • Eliminate final-day pressure</span>
+  <div class="day-sub">Drive to Ayodhya → Ram Mandir → Peaceful overnight</div>
+  <div class="weather-bar">Ayodhya: 38–41°C • Ram Mandir: 7 AM–12 PM & 1–9 PM • Early sleep tonight</div>
+
+  <div class="timeline">
+    <div class="trow"><div class="ttime">7:30 AM</div><div class="tline"><div class="tdot rest"></div><div class="tvert"></div></div><div class="tcontent">
+      <div class="tevent">Breakfast + Checkout (Optional: Sunrise Boat)</div>
+      <div class="tdesc">Optional 5 AM Ganga sunrise boat if grandma comfortable. Otherwise, peaceful 7:30 AM breakfast + checkout.</div>
+      <div class="ttip">Most spiritual—only do if energy high</div>
+    </div></div>
+
+    <div class="trow"><div class="ttime">8:30 AM</div><div class="tline"><div class="tdot travel"></div><div class="tvert"></div></div><div class="tcontent">
+      <div class="tevent">Drive: Varanasi → Ayodhya</div>
+      <div class="tdesc">~3.5 hrs by car (~200 km via NH27). Same AC cab + driver entire trip. Door-to-door comfort, no train transfers.</div>
+      <div class="ttip success">✅ Continuous cab = no station hassle for elderly</div>
+    </div></div>
+
+    <div class="trow"><div class="ttime">12:00 PM</div><div class="tline"><div class="tdot rest"></div><div class="tvert"></div></div><div class="tcontent">
+      <div class="tevent">Arrive Ayodhya → Lunch + Rest</div>
+      <div class="tdesc">Hotel near Ram Mandir. Lunch at nearby dhabas (vegetarian + non-veg). Rest 12–3 PM. Don't visit temple in peak heat.</div>
+    </div></div>
+
+    <div class="trow"><div class="ttime">3:00 PM</div><div class="tline"><div class="tdot must"></div><div class="tvert"></div></div><div class="tcontent">
+      <div class="tevent">Shri Ram Janmabhoomi Temple — Ram Mandir <span class="must-tag">must-visit</span></div>
+      <div class="tdesc">Most anticipated visit. Nagara-style sandstone architecture. FREE VIP darshan—book online at srjbtkshetra.org (opens midnight). Carry original Aadhaar for all members. No phones—use free locker (₹20). Wheelchair available. Dedicated senior citizen/disabled QUEUE (short!).</div>
+      <div class="ttip success">✅ Senior citizen queue separate + much shorter. Staff very helpful.</div>
+    </div></div>
+
+    <div class="trow"><div class="ttime">4:30 PM</div><div class="tline"><div class="tdot"></div><div class="tvert"></div></div><div class="tcontent">
+      <div class="tevent">Hanuman Garhi + Saryu Ghat</div>
+      <div class="tdesc">Hanuman Garhi: 76 steep steps—elderly can stay at base, do darshan below (prasad sellers outside). Saryu Ghat: flat, accessible. Beautiful evening aarti 6 PM. Peaceful closure.</div>
+    </div></div>
+
+    <div class="trow"><div class="ttime">🛌 8:00 PM</div><div class="tline"><div class="tdot rest"></div><div class="tvert"></div></div><div class="tcontent">
+      <div class="tevent">Dinner + Full Night Sleep in Ayodhya</div>
+      <div class="tdesc">Good dinner. NO EARLY ALARM. Sleep fully. This overnight stay removes ALL final-day pressure.</div>
+      <div class="ttip success">✅ Tomorrow: wake naturally, calm breakfast, relaxed departure.</div>
+    </div></div>
+  </div>
+</div>
+
+<!-- DAY 6 -->
+<div id="day6" class="day-panel">
+  <div class="day-title">Day 6 — Friday, May 8 — Ayodhya → Gorakhpur Departure</div>
+  <span class="day-theme">✈️ Calm exit • Well-rested • Zero rush</span>
+  <div class="day-sub">Relaxed morning → drive to Gorakhpur airport</div>
+  <div class="weather-bar">Morning: 32–38°C • Flight buffer: SAFE & COMFORTABLE</div>
+
+  <div class="timeline">
+    <div class="trow"><div class="ttime">6:30 AM</div><div class="tline"><div class="tdot rest"></div><div class="tvert"></div></div><div class="tcontent">
+      <div class="tevent">Wake Naturally + Breakfast</div>
+      <div class="tdesc">No 5 AM alarms. Sleep till 6:30 AM natural. Full, leisurely breakfast. Everyone calm + rested.</div>
+    </div></div>
+
+    <div class="trow"><div class="ttime">7:30 AM</div><div class="tline"><div class="tdot travel"></div><div class="tvert"></div></div><div class="tcontent">
+      <div class="tevent">Drive: Ayodhya → Gorakhpur Airport</div>
+      <div class="tdesc">~2.5 hrs (~130 km via NH27). Same AC cab. Arrive airport ~10 AM.</div>
+      <div class="ttip success">✅ Plenty buffer before 8 AM flight... wait, check your flight time!</div>
+    </div></div>
+
+    <div class="trow"><div class="ttime">10:00 AM</div><div class="tline"><div class="tdot"></div><div class="tvert"></div></div><div class="tcontent">
+      <div class="tevent">Gorakhpur Airport (Maharana Pratap Airport, GOI)</div>
+      <div class="tdesc">Check-in. Security. Comfortable wait. Flight home.</div>
+      <div class="ttip warn">⚠️ Confirm your actual flight time! If flight is 8 AM, depart 5:30 AM (but then overnight Ayodhya was KEY buffer)</div>
+    </div></div>
+  </div>
+</div>
+
+<!-- HOTELS -->
+<div id="hotels" class="day-panel">
+  <div class="day-title">🏨 Hotel Recommendations</div>
+  <div class="day-sub">Mid-range AC • Senior-friendly • Near attractions • 2 rooms/night • Lift mandatory</div>
+
+  <div class="hotel-card">
+    <div class="hotel-night">Night 1 — Delhi (May 3)</div>
+    <div class="hotel-name">Hotel Palace Heights / Bloomrooms @ New Delhi</div>
+    <div class="hotel-meta">Connaught Place • ₹2,000–2,800/room • Near Metro • Walking distance to restaurants</div>
+    <div class="hotel-tags"><span class="htag">AC rooms</span><span class="htag">Lift access</span><span class="htag">South Indian nearby</span><span class="htag">Easy taxi</span></div>
+  </div>
+
+  <div class="hotel-card">
+    <div class="hotel-night">Night 2 — Agra (May 4)</div>
+    <div class="hotel-name">Hotel Sidhartha / Crystal Sarovar Premiere</div>
+    <div class="hotel-meta">Near Taj Ganj • ₹2,200–3,200/room • 5-min taxi to Taj • Rooftop views</div>
+    <div class="hotel-tags"><span class="htag">AC rooms</span><span class="htag">Lift access</span><span class="htag">Taj view</span><span class="htag">Early breakfast</span></div>
+  </div>
+
+  <div class="hotel-card">
+    <div class="hotel-night">Night 3 — Prayagraj (May 5)</div>
+    <div class="hotel-name">Hotel Kanha Shyam / Prayagraj Regency</div>
+    <div class="hotel-meta">Near Civil Lines / Sangam • ₹1,800–2,800/room • On-site restaurant</div>
+    <div class="hotel-tags"><span class="htag">AC rooms</span><span class="htag">On-site dining</span><span class="htag">Near Sangam</span><span class="htag">Quiet</span></div>
+  </div>
+
+  <div class="hotel-card">
+    <div class="hotel-night">Night 4 — Varanasi (May 6)</div>
+    <div class="hotel-name">Ramada by Wyndham Varanasi / Hotel Rivatas</div>
+    <div class="hotel-meta">Near Assi Ghat • ₹2,500–3,500/room • 5-min walk to aarti • Ganga-facing rooms</div>
+    <div class="hotel-tags"><span class="htag">AC rooms</span><span class="htag">Ganga view</span><span class="htag">Assi walkable</span><span class="htag">Security</span></div>
+  </div>
+
+  <div class="hotel-card">
+    <div class="hotel-night">Night 5 — Ayodhya (May 7) <span class="improvement-badge">NEW</span></div>
+    <div class="hotel-name">The Regency Ayodhya / Hotel Saryu Palace</div>
+    <div class="hotel-meta">Near Ram Mandir • ₹2,000–3,000/room • 10-min walk to temple • Peaceful location</div>
+    <div class="hotel-tags"><span class="htag">AC rooms</span><span class="htag">Lift access</span><span class="htag">Ram Mandir near</span><span class="htag">Parking</span></div>
+  </div>
+</div>
+
+<!-- TRANSPORT -->
+<div id="transport" class="day-panel">
+  <div class="day-title">🚗 Transport Strategy</div>
+  <div class="day-sub">Comfort-first • Single vendor preferred • AC mandatory</div>
+
+  <div class="budget-highlight">
+    💡 <strong>BEST APPROACH:</strong> Book ONE AC cab vendor for entire trip (Delhi → Agra → Varanasi → Ayodhya → Gorakhpur). Negotiate package rate ₹12,000–15,000 for whole journey. Same driver = comfort + continuity for grandma.
+  </div>
+
+  <div class="transport-row"><div class="t-icon">✈️</div><div class="t-info">
+    <div class="t-title">Delhi Airport → Hotel (May 3)</div>
+    <div class="t-sub">Pre-booked AC taxi. ₹700–900. Driver name-board. ~45 min from T3.</div>
+  </div></div>
+
+  <div class="transport-row"><div class="t-icon">🚙</div><div class="t-info">
+    <div class="t-title">Delhi → Vrindavan → Agra (May 4)</div>
+    <div class="t-sub">Full-day AC Innova. ₹4,000–5,000. Fits 6 people comfortably. Book vendor night before.</div>
+  </div></div>
+
+  <div class="transport-row"><div class="t-icon">🚂</div><div class="t-info">
+    <div class="t-title">Agra Cantt → Prayagraj (May 5)</div>
+    <div class="t-sub">Train: Prayagraj Express (12418) ~4.5 hrs. AC 3-Tier (3A). ₹500–700/person. Book IRCTC NOW. Senior citizen 40% discount.</div>
+  </div></div>
+
+  <div class="transport-row"><div class="t-icon">🚂</div><div class="t-info">
+    <div class="t-title">Prayagraj → Varanasi (May 6)</div>
+    <div class="t-sub">Mahanagari Express ~2 hrs. AC Chair Car. ₹250–400/person.</div>
+  </div></div>
+
+  <div class="transport-row"><div class="t-icon">🚙</div><div class="t-info">
+    <div class="t-title">Varanasi → Ayodhya → Gorakhpur (May 7–8) <span class="improvement-badge">Improved</span></div>
+    <div class="t-sub">Private AC cab: Varanasi → Ayodhya (~3.5 hrs, ₹3,500). Stay overnight. Next morning: Ayodhya → Gorakhpur (~2.5 hrs, ₹2,000). CONTINUOUS cab = perfect for elderly.</div>
+  </div></div>
+
+  <div class="transport-row"><div class="t-icon">🛺</div><div class="t-info">
+    <div class="t-title">Within-City: E-rickshaw / Battery Rickshaw</div>
+    <div class="t-sub">All cities: Use e-rickshaws temple-to-temple. ₹50–150/ride. Smooth, covered. Perfect for grandma. Negotiate price before boarding.</div>
+  </div></div>
+
+  <div class="transport-row"><div class="t-icon">⛳</div><div class="t-info">
+    <div class="t-title">Taj Mahal Entry: Golf Cart (May 5)</div>
+    <div class="t-sub">Battery cart gate → monument: ₹25/adult. Grandma MUST use—saves 600m walking in 26°C morning.</div>
+  </div></div>
+</div>
+
+<!-- BUDGET -->
+<div id="budget" class="day-panel">
+  <div class="day-title">💰 Budget Estimate (5 people, 6 nights)</div>
+  <div class="day-sub">Realistic • Mid-range • All prices approximate</div>
+
+  <div class="budget-row"><span>Hotels (6 nights × 2 rooms × ₹2,400 avg)</span><span class="amt">₹28,800</span></div>
+  <div class="budget-row"><span>Transport (cabs + trains + local)</span><span class="amt">₹25,000</span></div>
+  <div class="budget-row"><span>Food (5 people × 6 days × ₹500/day)</span><span class="amt">₹15,000</span></div>
+  <div class="budget-row"><span>Entry tickets (Taj + monuments + temples)</span><span class="amt">₹2,500</span></div>
+  <div class="budget-row"><span>Boat rides (Sangam + Varanasi × 2)</span><span class="amt">₹2,500</span></div>
+  <div class="budget-row"><span>Guides / audio tours / tips</span><span class="amt">₹3,000</span></div>
+  <div class="budget-row"><span>Miscellaneous (ORS, meds, souvenirs)</span><span class="amt">₹3,500</span></div>
+  <div class="budget-row"><span style="color:#1a1a1a">Total (group of 5)</span><span class="amt">~ ₹80,300</span></div>
+  <div class="budget-row"><span style="color:#666;font-size:13px">Per person</span><span class="amt" style="font-size:13px">~ ₹16,060</span></div>
+
+  <div class="budget-note">
+    ⚠️ <strong>Additional night in Ayodhya</strong> adds ~₹4,000–5,000 to budget vs original 5-day plan. <strong>WORTH IT.</strong> Eliminates final-day stress + grandma health risk.
+  </div>
+
+  <div class="budget-highlight">
+    ✅ <strong>KEY BOOKING ACTIONS:</strong><br>
+    • Book trains NOW on IRCTC (Tatkal quota fills fast May travel)<br>
+    • Senior citizen 40% discount for 60+ passengers<br>
+    • Carry physical Aadhaar all 5 members (required temples)<br>
+    • Pre-book Ram Mandir VIP darshan (free, avoids queue)
+  </div>
+</div>
+
+<!-- TIPS -->
+<div id="tips" class="day-panel">
+  <div class="day-title">🌞 Summer Survival Guide — May North India</div>
+  <div class="day-sub">Peak heat 40–44°C. These tips are MANDATORY for family comfort + grandma safety.</div>
+
+  <div class="tips-list">
+    <div class="tip-item"><span class="tip-icon">⏰</span><span><strong>Heat Window Rule</strong> — Outdoor activities ONLY 6–10 AM & 5–8 PM. Midday 11 AM–4 PM = AC hotel rest. Non-negotiable for elderly.</span></div>
+    
+    <div class="tip-item"><span class="tip-icon">💧</span><span><strong>Hydration</strong> — 3–4 litres water/person/day MINIMUM. Carry ORS/Electral sachets. Give grandma ORS every morning before step-out.</span></div>
+    
+    <div class="tip-item"><span class="tip-icon">👕</span><span><strong>Clothing</strong> — Light full-sleeve cotton (blocks sun, prevents overheating). Carry small towel + cooling spray/wet cloth. Avoid synthetics.</span></div>
+    
+    <div class="tip-item"><span class="tip-icon">💊</span><span><strong>Medical Kit</strong> — ORS sachets, Paracetamol, Digene (acidity), Electral powder, Band-aids, grandma's regular meds + 2-day extra supply. Carry doctor's letter listing medications.</span></div>
+    
+    <div class="tip-item"><span class="tip-icon">🗣️</span><span><strong>Language</strong> — Hindi primary. Download Google Translate offline (Hindi ↔ Tamil ↔ English). Carry handwritten Hindi note with hotel address for autos.</span></div>
+    
+    <div class="tip-item"><span class="tip-icon">🪪</span><span><strong>Aadhaar</strong> — Carry ORIGINAL Aadhaar all 5 members. Required: Kashi Vishwanath, Ram Mandir, some hotels. Keep photocopies too.</span></div>
+    
+    <div class="tip-item"><span class="tip-icon">♿</span><span><strong>Wheelchair / Walking Aid</strong> — If grandma doesn't have, rent from hotel in Varanasi. Folding stick recommended for all elderly throughout trip.</span></div>
+    
+    <div class="tip-item"><span class="tip-icon">👗</span><span><strong>Temple Dress Code</strong> — No shorts, no sleeveless inside temples. Sisters carry stole/dupatta. Men avoid sleeveless vests. Shoes come off.</span></div>
+    
+    <div class="tip-item"><span class="tip-icon">📱</span><span><strong>Photography</strong> — Phones NOT allowed inside Ram Mandir / Kashi Vishwanath. Use free locker (₹20). Take photos outside gates only.</span></div>
+    
+    <div class="tip-item"><span class="tip-icon">🍛</span><span><strong>Food Comfort</strong> — South Indian available ALL cities: Saravana Bhavan (Delhi, Agra), Udupi Bhavan (Varanasi). No food anxiety. Most restaurants serve dosa/idli breakfast.</span></div>
+  </div>
+</div>
+
+</div>
+
+<script>
+function show(id, el) {
+  document.querySelectorAll('.day-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+</script>
+
+</body>
+</html>
